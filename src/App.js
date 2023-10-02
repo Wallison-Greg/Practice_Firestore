@@ -1,23 +1,33 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { 
+    addDataAction, 
+    setDataAction, 
+    updateDataAction, 
+    getDataActions, 
+    getDataAction 
+  } from './services/actions/dataAction';
+import { onSnapshotUser, filterUser, deleteUser } from './services/dataAcess/Api';
 
 function App() {
+
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    //getDataActions().then((res) => {console.log(res)})
+    //getDataAction().then((res) => {console.log(res)})
+    onSnapshotUser(setUsers)
+    //filterUser(setUsers, 'marilia')
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {users.map((item) => (
+        <>
+          <p>{item.name}</p>
+          <button onClick={() => {deleteUser()}}>excluir</button>
+        </>
+      ))}
     </div>
   );
 }
